@@ -129,43 +129,51 @@ public class Application {
     static void enterGrade()  {
         List<String> arr = new ArrayList();
         boolean check = true;
+        boolean outercheck = true;
         String sName = "";
 
-        while(check) {
-            System.out.println("Enter student name");
-            sName = scanS.nextLine();
+        while (outercheck) {
+            while (check) {
+                System.out.println("Enter student name or type exit");
+                sName = scanS.nextLine();
 
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(fileLocation1+ "/" + sName + ".txt"));
-
-                String line;
-                while((line = reader.readLine()) != null) {
-                    arr.add(line);
+                if (sName.equalsIgnoreCase("Exit")) {
+                    outercheck = false;
+                    break;
                 }
 
-                check = false;
-            } catch (Exception var10) {
-                System.out.println("Can't read it");
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader(fileLocation1 + "/" + sName + ".txt"));
+
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        arr.add(line);
+                    }
+
+                    check = false;
+                } catch (Exception var10) {
+                    System.out.println("Can't read it");
+                }
+
+
+                System.out.println(arr);
+                System.out.println("Enter Java Grade: ");
+                int javag = scanS.nextInt();
+                System.out.println("Enter SQL Grade: ");
+                int sqlg = scanS.nextInt();
+                System.out.println("Enter JSP Grade: ");
+                int jspg = scanS.nextInt();
+                System.out.println("Enter Spring Grade: ");
+                int sprg = scanS.nextInt();
+
+                try {
+                    writeToF(sName, (String) arr.get(1), javag, sqlg, jspg, sprg);
+                    System.out.println("Successfully written");
+                } catch (Exception var9) {
+                    System.out.println("Couldn't write to file");
+                }
             }
         }
-
-        System.out.println(arr);
-        System.out.println("Enter Java Grade: ");
-        int javag = scanS.nextInt();
-        System.out.println("Enter SQL Grade: ");
-        int sqlg = scanS.nextInt();
-        System.out.println("Enter JSP Grade: ");
-        int jspg = scanS.nextInt();
-        System.out.println("Enter Spring Grade: ");
-        int sprg = scanS.nextInt();
-
-        try {
-            writeToF(sName, (String)arr.get(1), javag, sqlg, jspg, sprg);
-            System.out.println("Successfully written");
-        } catch (Exception var9) {
-            System.out.println("Couldn't write to file");
-        }
-
     }
 
     static void calcAvg() {
